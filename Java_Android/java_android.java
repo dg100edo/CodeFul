@@ -27,8 +27,8 @@ public Object base64StringToObject(String base64String){
 	Object object; 
 	try {
 		ois = new ObjectInputStream(new ByteArrayInputStream(objectBytes));
-        object = ois.readObject();
-        return object;  
+	        object = ois.readObject();
+	        return object;  
 	} catch (StreamCorruptedException e) {
 		throw new RuntimeException(e);
 	} catch (IOException e) {
