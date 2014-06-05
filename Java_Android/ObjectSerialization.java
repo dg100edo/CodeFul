@@ -37,3 +37,9 @@ public Object base64StringToObject(String base64String){
 		throw new RuntimeException(e);
 	} 
 }
+
+/**
+ *	The code was written for android. If you want adapt it to Java you must change:
+ *  	- Base64.encodeToString(objectBytes, Base64.NO_WRAP) TO printBase64(objectBytes) - in line 16
+ * 	- Base64.decode(base64String, Base64.NO_WRAP) TO parseBase64(base64String) - in line 25
+ */
