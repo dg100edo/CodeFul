@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class PopupMenuUtil{
     private Activity activity;
     
-    public final static OnClickListener doNothingListener = new OnClickListener(){
+    public final static OnClickListener DO_NOTHING_LISTENER = new OnClickListener(){
         public void onClick(DialogInterface dialog, int which){}
     };
     
@@ -18,13 +18,14 @@ public class PopupMenuUtil{
         this.activity = activity;
     }
     
-    public AlertDialog getUserData(String title, String defaultValue, boolean cancelable, boolean selectText, final OnUserSubmitDataListerner listener){
+    public AlertDialog getUserData(String title, String defaultValue, int inputType, boolean cancelable, boolean selectText, final OnUserSubmitDataListerner listener){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final EditText editText = new EditText(activity);
+        editText.setInputType(inputType);
         editText.setText(defaultValue);
         if(selectText)
             editText.setSelection(0, editText.getText().length());
-        else editText.setSelection(editText.getText().length());
+//        else editText.setSelection(editText.getText().length());
         builder.setView(editText);
         builder.setTitle(title);
         builder.setCancelable(cancelable);
@@ -34,15 +35,15 @@ public class PopupMenuUtil{
             }
         });
         if(cancelable)
-            builder.setNegativeButton(R.string.cancelButton, doNothingListener);
+            builder.setNegativeButton(R.string.cancelButton, DO_NOTHING_LISTENER);
         AlertDialog dialog = builder.create();
         dialog.setOwnerActivity(activity);
         dialog.show();
         return dialog;
     }
     
-    public AlertDialog getUserData(int titleId, int defaultValueId, boolean cancelable, boolean selectText, OnUserSubmitDataListerner listener){
-        return this.getUserData(activity.getString(titleId), activity.getString(defaultValueId), cancelable, selectText, listener);
+    public AlertDialog getUserData(int titleId, int defaultValueId, int inputType, boolean cancelable, boolean selectText, OnUserSubmitDataListerner listener){
+        return this.getUserData(activity.getString(titleId), activity.getString(defaultValueId), inputType, cancelable, selectText, listener);
     }
     
     // SIRS project reutilization :)
@@ -75,9 +76,9 @@ public class PopupMenuUtil{
     
     public void getConfirmationMessage(String title, String message, OnClickListener positive, OnClickListener negative){
         if(positive == null)
-            positive = doNothingListener;
+            positive = DO_NOTHING_LISTENER;
         if(negative == null)
-            negative = doNothingListener;
+            negative = DO_NOTHING_LISTENER;
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setPositiveButton(R.string.yesButton, positive);
         builder.setNegativeButton(R.string.noButton, negative);
